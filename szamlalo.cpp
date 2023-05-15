@@ -11,7 +11,7 @@ Postit::Postit(int x0, int y0,int sx0,int sy0){
         sy = sy0;
         x = x0;;
         y = y0;
-        v = 0;
+        v = 20;
         fokusz=false;
 }
 
