@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-    Jatekmester jm(800,600,100,10);
+    Jatekmester jm(800,600,100);
     jm.run();
 //    gout.open(400,400);
 //     event ev;

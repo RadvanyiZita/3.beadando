@@ -22,13 +22,13 @@ using namespace std;
     }
 
 
-Jatekter::Jatekter(int xx,int yy, int panelh, int darab)
+Jatekter::Jatekter(int xx,int yy, int panelh)
 {
     XX=xx;
     YY=yy;
     panelheight=panelh;
-    db=darab;
-
+    meret=0;
+    aktuals="";
 }
 void Jatekter::kirajzol()
 {
@@ -41,8 +41,8 @@ void Jatekter::kirajzol()
 void Jatekter::startmenu()
 {
     gout << move_to(0,0)<< color(100,100,100)<<box(XX,panelheight)
-    << move_to(50,30)<< color(255,255,255)<< text("Válassz jelet:")<<
-    move_to(400,30)<< text("A pálya mérete:")<<
+    << move_to(50,30)<< color(255,255,255)<< text("Valassz jelet:")<<
+    move_to(400,30)<< text("A palya merete:")<<
     move_to(650,30)<< color(0,255,0)<< box(100,50)<< move_to(680,50)<<
     color(0,0,0)<< text("START");
 
@@ -50,9 +50,8 @@ void Jatekter::startmenu()
 
 void Jatekter::panelrajz()
 {
-    gout << move_to(0,0)<< color(253,179,223)<<box(XX,panelheight);
-
-
+    gout << move_to(0,0)<< color(253,179,223)<<box(XX,panelheight)<<
+    move_to(50,30)<< color(0,0,0)<< text("A kovetkezo jatekos:");
 
 }
 void Jatekter::elemrajz()
@@ -70,9 +69,18 @@ void Jatekter::uzenet()
 
 
 
-    Jatekmester::Jatekmester(int xx,int yy, int panelh, int darab):Jatekter(xx, yy,  panelh, darab)
+    Jatekmester::Jatekmester(int xx,int yy, int panelh):Jatekter(xx, yy,  panelh)
     {
 
+    }
+    bool Jatekmester::rajtavanboxon(int ex, int ey,int bx0,int by0, int bx1, int by1)
+    {
+        bool rajta=false;
+        if(bx0<=ex && bx1>=ex && by0 <=ey&& by1 >=ey)
+        {
+            rajta=true;
+        }
+        return rajta;
     }
     bool Jatekmester::szabalyose()
     {
@@ -92,14 +100,28 @@ void Jatekter::uzenet()
        jelek.push_back("X");
        jelek.push_back("O");
        beviteliEX jel=beviteliEX(200,30,jelek);
+       jel.Set_maxitem(2);
         startmenu();
        jel.rajzol();
        n1.rajzol();
+        bool valaszt=true;
        while(gin >> ev && ev.keycode != key_escape)
        {
+            if(valaszt)
+            {
+                jel.handle(ev);
+                n1.handle(ev);
 
-           jel.handle(ev);
-           n1.handle(ev);
+            }
+
+           if(ev.button==btn_left && rajtavanboxon(ev.pos_x,ev.pos_y,650,30,750,80))
+           {
+               valaszt=false;
+               aktuals=jel.Get_Text();
+               meret=n1.Getvalue();
+               panelrajz();
+     //          cout << meret<< aktuals<< endl;
+           }
 
            gout << refresh;
        }

@@ -1,5 +1,8 @@
 #ifndef AMOBA_HPP_INCLUDED
 #define AMOBA_HPP_INCLUDED
+#include <string>
+
+using namespace std;
 
 struct elem{
 protected:
@@ -10,10 +13,13 @@ public:
 
 class Jatekter
 {
-protected: int XX,YY,panelheight, db;
+protected:
+    int XX,YY,panelheight;
+    string aktuals;
+       int meret;
 
 public:
-    Jatekter(int xx,int yy, int panelh, int darab);
+    Jatekter(int xx,int yy, int panelh);
     void kirajzol();
     void startmenu();
     void panelrajz();
@@ -28,7 +34,8 @@ class Jatekmester:Jatekter
 public:
 
     static Jatekter& instace();
-    Jatekmester(int xx,int yy, int panelh, int darab);
+    Jatekmester(int xx,int yy, int panelh);
+    bool rajtavanboxon(int ex, int ey,int bx0,int by0, int bx1, int by1);
     bool szabalyose();
     bool nyerte();
     void run();
