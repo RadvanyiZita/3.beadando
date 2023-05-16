@@ -12,14 +12,14 @@ using namespace genv;
 using namespace std;
 
 
- elem::elem(int x, int y, int H, int W, int state)
-    {
-        x0=x;
-        y0=y;
-        height=H;
-        width=W;
-        allapot=state;
-    }
+// elem::elem(int x, int y, int H, int W, int state)
+//    {
+//        x0=x;
+//        y0=y;
+//        height=H;
+//        width=W;
+//        allapot=state;
+//    }
 
 
 Jatekter::Jatekter(int xx,int yy, int panelh)
@@ -29,6 +29,7 @@ Jatekter::Jatekter(int xx,int yy, int panelh)
     panelheight=panelh;
     meret=0;
     aktuals="";
+
 }
 void Jatekter::kirajzol()
 {
@@ -56,7 +57,27 @@ void Jatekter::panelrajz()
 }
 void Jatekter::elemrajz()
 {
+    int szel=(YY-panelheight)/meret;
+    int xkezd=((int)(XX-szel*meret)/2.0);
+    int ykezd=panelheight;
+//    cout << szel << " "<< xkezd<<endl;
 
+    for(int i=0;i<meret;i++)
+    {
+        for(int j=0;j<meret;j++)
+        {
+            ter[i][j].x0=xkezd+i*szel;
+            ter[i][j].y0=ykezd+j*szel;
+            ter[i][j].height=szel;
+            ter[i][j].width=szel;
+            ter[i][j].allapot=0;
+
+            gout<< move_to(ter[i][j].x0,ter[i][j].y0)<< color(255,255,255)<<
+            line_to(ter[i][j].x0+szel,ter[i][j].y0)
+            << line_to(ter[i][j].x0+szel,ter[i][j].y0+szel)<<line_to(ter[i][j].x0,ter[i][j].y0+szel)
+            <<line_to(ter[i][j].x0,ter[i][j].y0);
+        }
+    }
 }
 void Jatekter::lepesrajz()
 {
@@ -120,6 +141,7 @@ void Jatekter::uzenet()
                aktuals=jel.Get_Text();
                meret=n1.Getvalue();
                panelrajz();
+               elemrajz();
      //          cout << meret<< aktuals<< endl;
            }
 

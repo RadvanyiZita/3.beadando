@@ -5,10 +5,10 @@
 using namespace std;
 
 struct elem{
-protected:
+
     int x0,y0,height, width,allapot;
-public:
-   elem(int x, int y, int H, int W, int state);
+
+ //  elem(int x, int y, int H, int W, int state);
 };
 
 class Jatekter
@@ -17,6 +17,7 @@ protected:
     int XX,YY,panelheight;
     string aktuals;
        int meret;
+       elem ter[30][30];
 
 public:
     Jatekter(int xx,int yy, int panelh);
