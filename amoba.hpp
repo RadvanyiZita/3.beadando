@@ -14,7 +14,7 @@ struct elem{
 class Jatekter
 {
 protected:
-    int XX,YY,panelheight;
+    int XX,YY,panelheight,xkezd,ykezd,szel;
     string aktuals;
        int meret;
        elem ter[30][30];
@@ -24,8 +24,9 @@ public:
     void kirajzol();
     void startmenu();
     void panelrajz();
+    bool rajtavanboxon(int ex, int ey,int bx0,int by0, int bx1, int by1);
     void elemrajz();
-    void lepesrajz();
+    void lepesrajz(int i, int j);
     void uzenet();
 
 };
@@ -36,8 +37,7 @@ public:
 
     static Jatekter& instace();
     Jatekmester(int xx,int yy, int panelh);
-    bool rajtavanboxon(int ex, int ey,int bx0,int by0, int bx1, int by1);
-    bool szabalyose();
+    bool szabalyose(int ex,int ey);
     bool nyerte();
     void run();
 

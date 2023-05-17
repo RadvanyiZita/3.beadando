@@ -8,7 +8,7 @@ protected:
     int x, y, sx, sy;
     int v;
     bool fokusz;
-    int fx, fy;
+    int minvalue, maxvalue;
 public:
     Postit(int x0, int y0,int sx0,int sy0);
    virtual void rajzol();

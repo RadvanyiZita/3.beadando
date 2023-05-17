@@ -29,6 +29,9 @@ Jatekter::Jatekter(int xx,int yy, int panelh)
     panelheight=panelh;
     meret=0;
     aktuals="";
+    xkezd=0;
+    ykezd=0;
+    szel=0;
 
 }
 void Jatekter::kirajzol()
@@ -55,11 +58,20 @@ void Jatekter::panelrajz()
     move_to(50,30)<< color(0,0,0)<< text("A kovetkezo jatekos:");
 
 }
+bool Jatekter::rajtavanboxon(int ex, int ey,int bx0,int by0, int bx1, int by1)
+    {
+        bool rajta=false;
+        if(bx0<=ex && bx1>=ex && by0 <=ey&& by1 >=ey)
+        {
+            rajta=true;
+        }
+        return rajta;
+    }
 void Jatekter::elemrajz()
 {
-    int szel=(YY-panelheight)/meret;
-    int xkezd=((int)(XX-szel*meret)/2.0);
-    int ykezd=panelheight;
+    szel=(YY-panelheight)/meret;
+    xkezd=((int)(XX-szel*meret)/2.0);
+    ykezd=panelheight;
 //    cout << szel << " "<< xkezd<<endl;
 
     for(int i=0;i<meret;i++)
@@ -79,8 +91,22 @@ void Jatekter::elemrajz()
         }
     }
 }
-void Jatekter::lepesrajz()
+void Jatekter::lepesrajz(int i, int j)
 {
+    gout << font("LiberationSans-Regular.ttf",2*szel/3);
+    if(aktuals=="X")
+    {
+        ter[i][j].allapot=1;
+        aktuals="O";
+        gout << move_to(ter[i][j].x0+szel/6,ter[i][j].y0+szel/6)<<color(255,255,255)<<
+        text("X");
+    }
+    else
+    {
+        aktuals="X";
+        ter[i][j].allapot=2;
+        gout << move_to(ter[i][j].x0+szel/6,ter[i][j].y0+szel/6)<<color(255,255,255)<< text("O");
+    }
 
 }
 void Jatekter::uzenet()
@@ -94,18 +120,23 @@ void Jatekter::uzenet()
     {
 
     }
-    bool Jatekmester::rajtavanboxon(int ex, int ey,int bx0,int by0, int bx1, int by1)
-    {
-        bool rajta=false;
-        if(bx0<=ex && bx1>=ex && by0 <=ey&& by1 >=ey)
-        {
-            rajta=true;
-        }
-        return rajta;
-    }
-    bool Jatekmester::szabalyose()
-    {
 
+    bool Jatekmester::szabalyose(int ex,int ey)
+    {
+        for(int i=0;i<meret;i++)
+    {
+        for(int j=0;j<meret;j++)
+        {
+            if(rajtavanboxon(ex,ey,ter[i][j].x0,ter[i][j].y0,ter[i][j].x0+szel,ter[i][j].y0+szel))
+            {
+                if(ter[i][j].allapot==0)
+                {
+                    lepesrajz(i, j);
+                }
+
+            }
+        }
+    }
     }
     bool Jatekmester::nyerte()
     {
@@ -126,6 +157,7 @@ void Jatekter::uzenet()
        jel.rajzol();
        n1.rajzol();
         bool valaszt=true;
+        bool megye=false;
        while(gin >> ev && ev.keycode != key_escape)
        {
             if(valaszt)
@@ -142,8 +174,13 @@ void Jatekter::uzenet()
                meret=n1.Getvalue();
                panelrajz();
                elemrajz();
+               megye=true;
      //          cout << meret<< aktuals<< endl;
            }
+           if(ev.button==btn_left && megye && rajtavanboxon(ev.pos_x,ev.pos_y,xkezd,ykezd,xkezd+szel*meret,ykezd+szel*meret))
+            {
+                szabalyose(ev.pos_x,ev.pos_y);
+            }
 
            gout << refresh;
        }

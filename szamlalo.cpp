@@ -26,6 +26,8 @@ void Postit::rajzol()
 Number::Number ( int x0, int y0,int sx0,int sy0, int boxszel0):Postit(x0,y0,sx0,sy0){
         boxszel=boxszel0;
         boxmag=sy0/2;
+        minvalue=15;
+        maxvalue=30;
 
 }
 void Number::rajzol()
@@ -67,24 +69,46 @@ void Number::handle(genv::event ev){
             fokusz = rajtavanboxon(ev.pos_x, ev.pos_y);
             if(ev.pos_x >= x+sx && ev.pos_y >= y && ev.pos_x < x+sx+boxszel && ev.pos_y < y + sy/2)
             {
-                v++;
+                if(v<maxvalue)
+                {
+                    v++;
+                }
+
             }
             if(ev.pos_x >= x+sx && ev.pos_y >= y+ sy/2 && ev.pos_x < x+sx+boxszel && ev.pos_y < y + sy)
             {
-                v--;
+                if(v>minvalue)
+                {
+                    v--;
+                }
+
             }
         }
         if(fokusz && ev.keycode==key_up ){
-            v++;
+            if(v<maxvalue)
+                {
+                    v++;
+                }
         }
         if(fokusz && ev.keycode==key_down){
-            v--;
+           if(v>minvalue)
+                {
+                    v--;
+                }
         }
          if(fokusz && ev.keycode==key_pgup){
-            v=v+10;
+                if(v<maxvalue-10)
+                {
+                    v=v+10;
+                }
+
         }
         if(fokusz && ev.keycode==key_pgdn){
-            v=v-10;
+                if(v>minvalue+10)
+                {
+                    v=v-10;
+                }
+
         }
         rajzol();
     }
