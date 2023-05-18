@@ -132,14 +132,143 @@ void Jatekter::uzenet()
                 if(ter[i][j].allapot==0)
                 {
                     lepesrajz(i, j);
+                    nyerte(i,j);
                 }
 
             }
         }
     }
     }
-    bool Jatekmester::nyerte()
+
+    bool Jatekmester::nyerte(int i, int j)
     {
+        int mini=0;
+        int maxi=meret;
+        int minj=0;
+        int maxj=meret;
+        int szorzat=1;
+        bool vannyert=false;
+
+        if(i-4<0) mini=0;
+        else mini=i-4;
+
+        if(i+4>meret)maxi=meret;
+        else maxi=i+4;
+
+ //       cout << mini << " " << maxi << endl;
+
+        int ah=mini;
+        int fh=mini+4;
+
+        while(fh<=maxi && !vannyert)
+        {
+            szorzat=1;
+            for(int k=ah; k<=fh; k++)
+            {
+                szorzat=szorzat*ter[k][j].allapot;
+  //              cout << szorzat<< endl;
+            }
+            ah++;
+            fh++;
+            vannyert=((szorzat==1) || (szorzat==32));
+
+        }
+
+
+        if(j-4<0) mini=0;
+        else mini=j-4;
+
+        if(j+4>meret)maxi=meret;
+        else maxi=j+4;
+        ah=mini;
+        fh=mini+4;
+
+        while(fh<=maxi && !vannyert)
+        {
+            szorzat=1;
+            for(int k=ah; k<=fh; k++)
+            {
+                szorzat=szorzat*ter[i][k].allapot;
+  //              cout << szorzat<< endl;
+            }
+            ah++;
+            fh++;
+            vannyert=((szorzat==1) || (szorzat==32));
+        }
+
+
+
+        if(i-4<0) mini=0;
+        else mini=i-4;
+
+        if(i+4>meret)maxi=meret;
+        else maxi=i+4;
+
+        if(j-4<0) minj=0;
+        else minj=j-4;
+
+        if(j+4>meret)maxj=meret;
+        else maxj=j+4;
+
+        if(mini<minj) ah=mini;
+        else ah=minj;
+        fh=ah+4;
+
+
+       while(fh<=maxi && !vannyert)
+        {
+            szorzat=1;
+            for(int k=ah; k<=fh; k++)
+            {
+                szorzat=szorzat*ter[k][k].allapot;
+  //              cout << szorzat<< endl;
+            }
+            ah++;
+            fh++;
+            vannyert=((szorzat==1) || (szorzat==32));
+
+        }
+
+
+        if(i-4<0) mini=0;
+        else mini=i-4;
+
+        if(i+4>meret)maxi=meret;
+        else maxi=i+4;
+
+        if(j-4<0) minj=0;
+        else minj=j-4;
+
+        if(j+4>meret)maxj=meret;
+        else maxj=j+4;
+
+        if(mini<minj) ah=mini;
+        else ah=minj;
+        fh=ah+4;
+
+        while(fh<=maxi && !vannyert)
+        {
+            szorzat=1;
+            for(int k=ah; k<=fh; k++)
+            {
+                szorzat=szorzat*ter[fh-k+ah][k].allapot;
+               // cout << szorzat<< endl;
+            }
+            ah++;
+            fh++;
+            vannyert=((szorzat==1) || (szorzat==32));
+
+        }
+
+
+
+
+
+        if(vannyert)
+        {
+            cout << "nyert" <<endl;
+        }
+
 
     }
 

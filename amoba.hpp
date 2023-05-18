@@ -38,7 +38,7 @@ public:
     static Jatekter& instace();
     Jatekmester(int xx,int yy, int panelh);
     bool szabalyose(int ex,int ey);
-    bool nyerte();
+    bool nyerte(int i, int j);
     void run();
 
 };
