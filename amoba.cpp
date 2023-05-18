@@ -11,17 +11,6 @@
 using namespace genv;
 using namespace std;
 
-
-// elem::elem(int x, int y, int H, int W, int state)
-//    {
-//        x0=x;
-//        y0=y;
-//        height=H;
-//        width=W;
-//        allapot=state;
-//    }
-
-
 Jatekter::Jatekter(int xx,int yy, int panelh)
 {
     XX=xx;
@@ -61,7 +50,7 @@ void Jatekter::panelrajz()
 bool Jatekter::rajtavanboxon(int ex, int ey,int bx0,int by0, int bx1, int by1)
     {
         bool rajta=false;
-        if(bx0<=ex && bx1>=ex && by0 <=ey&& by1 >=ey)
+        if(bx0<ex && bx1>ex && by0 <ey&& by1 >ey)
         {
             rajta=true;
         }
@@ -72,7 +61,6 @@ void Jatekter::elemrajz()
     szel=(YY-panelheight)/meret;
     xkezd=((int)(XX-szel*meret)/2.0);
     ykezd=panelheight;
-//    cout << szel << " "<< xkezd<<endl;
 
     for(int i=0;i<meret;i++)
     {
@@ -131,13 +119,13 @@ void Jatekter::uzenet()
             {
                 if(ter[i][j].allapot==0)
                 {
-                    lepesrajz(i, j);
+                    lepesrajz(i,j);
                     nyerte(i,j);
                 }
-
             }
         }
     }
+
     }
 
     bool Jatekmester::nyerte(int i, int j)
@@ -152,10 +140,8 @@ void Jatekter::uzenet()
         if(i-4<0) mini=0;
         else mini=i-4;
 
-        if(i+4>meret)maxi=meret;
+        if(i+4>meret) maxi=meret;
         else maxi=i+4;
-
- //       cout << mini << " " << maxi << endl;
 
         int ah=mini;
         int fh=mini+4;
@@ -166,14 +152,12 @@ void Jatekter::uzenet()
             for(int k=ah; k<=fh; k++)
             {
                 szorzat=szorzat*ter[k][j].allapot;
-  //              cout << szorzat<< endl;
             }
             ah++;
             fh++;
             vannyert=((szorzat==1) || (szorzat==32));
 
         }
-
 
         if(j-4<0) mini=0;
         else mini=j-4;
@@ -189,15 +173,39 @@ void Jatekter::uzenet()
             for(int k=ah; k<=fh; k++)
             {
                 szorzat=szorzat*ter[i][k].allapot;
-  //              cout << szorzat<< endl;
             }
             ah++;
             fh++;
             vannyert=((szorzat==1) || (szorzat==32));
         }
 
+// főátlóban
+// i az x tengely, j az y tengely mentén
 
+        if(i-4<0) mini=0;
+        else mini=i-4;
 
+        if(i+4>meret) maxi=meret;
+        else maxi=i+4;
+
+        if(j-4<0) minj=0;
+        else minj=j-4;
+
+        if(j+4>meret) maxj=meret;
+        else maxj=j+4;
+
+        int dx = mini;
+        int dy = minj;
+        while(dx+4 <= maxi && dy+4 <= maxj && !vannyert)
+        {
+            szorzat = ter[dx][dy].allapot*ter[dx+1][dy+1].allapot*ter[dx+2][dy+2].allapot*
+                        ter[dx+3][dy+3].allapot*ter[dx+4][dy+4].allapot;
+            dx++;
+            dy++;
+            vannyert=((szorzat==1) || (szorzat==32));
+        }
+
+// mellékátlóban
         if(i-4<0) mini=0;
         else mini=i-4;
 
@@ -210,63 +218,22 @@ void Jatekter::uzenet()
         if(j+4>meret)maxj=meret;
         else maxj=j+4;
 
-        if(mini<minj) ah=mini;
-        else ah=minj;
-        fh=ah+4;
-
-
-       while(fh<=maxi && !vannyert)
+        dx = maxi;
+        dy = minj;
+        while(dx-4 >= mini && dy+4 <= maxj && !vannyert)
         {
-            szorzat=1;
-            for(int k=ah; k<=fh; k++)
-            {
-                szorzat=szorzat*ter[k][k].allapot;
-  //              cout << szorzat<< endl;
-            }
-            ah++;
-            fh++;
+            szorzat = ter[dx][dy].allapot*ter[dx-1][dy+1].allapot*ter[dx-2][dy+2].allapot*
+                        ter[dx-3][dy+3].allapot*ter[dx-4][dy+4].allapot;
+            dx--;
+            dy++;
             vannyert=((szorzat==1) || (szorzat==32));
-
         }
-
-
-        if(i-4<0) mini=0;
-        else mini=i-4;
-
-        if(i+4>meret)maxi=meret;
-        else maxi=i+4;
-
-        if(j-4<0) minj=0;
-        else minj=j-4;
-
-        if(j+4>meret)maxj=meret;
-        else maxj=j+4;
-
-        if(mini<minj) ah=mini;
-        else ah=minj;
-        fh=ah+4;
-
-        while(fh<=maxi && !vannyert)
-        {
-            szorzat=1;
-            for(int k=ah; k<=fh; k++)
-            {
-                szorzat=szorzat*ter[fh-k+ah][k].allapot;
-               // cout << szorzat<< endl;
-            }
-            ah++;
-            fh++;
-            vannyert=((szorzat==1) || (szorzat==32));
-
-        }
-
-
-
-
 
         if(vannyert)
         {
-            cout << "nyert" <<endl;
+            VanNyero = true;
+            if (aktuals =="X") aktuals = "O"; else aktuals = "X";
+            cout << "nyert" << " " << aktuals <<endl;
         }
 
 
@@ -282,11 +249,12 @@ void Jatekter::uzenet()
        jelek.push_back("O");
        beviteliEX jel=beviteliEX(200,30,jelek);
        jel.Set_maxitem(2);
-        startmenu();
+       startmenu();
        jel.rajzol();
        n1.rajzol();
-        bool valaszt=true;
-        bool megye=false;
+       bool valaszt=true;
+       bool megye=false;
+       VanNyero = false;
        while(gin >> ev && ev.keycode != key_escape)
        {
             if(valaszt)
@@ -304,9 +272,8 @@ void Jatekter::uzenet()
                panelrajz();
                elemrajz();
                megye=true;
-     //          cout << meret<< aktuals<< endl;
            }
-           if(ev.button==btn_left && megye && rajtavanboxon(ev.pos_x,ev.pos_y,xkezd,ykezd,xkezd+szel*meret,ykezd+szel*meret))
+           if(ev.button==btn_left && megye && rajtavanboxon(ev.pos_x,ev.pos_y,xkezd,ykezd,xkezd+szel*meret,ykezd+szel*meret) && !VanNyero)
             {
                 szabalyose(ev.pos_x,ev.pos_y);
             }

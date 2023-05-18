@@ -8,7 +8,6 @@ struct elem{
 
     int x0,y0,height, width,allapot;
 
- //  elem(int x, int y, int H, int W, int state);
 };
 
 class Jatekter
@@ -16,8 +15,8 @@ class Jatekter
 protected:
     int XX,YY,panelheight,xkezd,ykezd,szel;
     string aktuals;
-       int meret;
-       elem ter[30][30];
+    int meret;
+    elem ter[30][30];
 
 public:
     Jatekter(int xx,int yy, int panelh);
@@ -33,6 +32,8 @@ public:
 
 class Jatekmester:Jatekter
 {
+private:
+    bool VanNyero;
 public:
 
     static Jatekter& instace();
