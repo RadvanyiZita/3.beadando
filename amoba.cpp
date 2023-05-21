@@ -186,55 +186,71 @@ void Jatekter::uzenet(string kiir)
             vannyert=((szorzat==1) || (szorzat==32));
         }
 
-// főátlóban
-// i az x tengely, j az y tengely mentén
-
-        if(i-4<0) mini=0;
-        else mini=i-4;
-
-        if(i+4>meret) maxi=meret;
-        else maxi=i+4;
-
-        if(j-4<0) minj=0;
-        else minj=j-4;
-
-        if(j+4>meret) maxj=meret;
-        else maxj=j+4;
-
-        int dx = mini;
-        int dy = minj;
-        while(dx+4 <= maxi && dy+4 <= maxj && !vannyert)
+// főátló
+if (!vannyert)
+{
+        szorzat = 1;
+        vector<int> kiszed;
+        int d = 0;
+        int k = i-4, l = j-4;
+        while (k<=i+4 && l<=j+4)
         {
-            szorzat = ter[dx][dy].allapot*ter[dx+1][dy+1].allapot*ter[dx+2][dy+2].allapot*
-                        ter[dx+3][dy+3].allapot*ter[dx+4][dy+4].allapot;
-            dx++;
-            dy++;
-            vannyert=((szorzat==1) || (szorzat==32));
+            if (k>=0 && k<=meret && l >=0 && l<=meret)
+            {
+                kiszed.push_back(ter[k][l].allapot);
+                d++;
+            }
+            k++;
+            l++;
         }
+        if (kiszed.size() >=5)
+        {
+            for (int k = 0; k <= kiszed.size()-4; k++ )
+            {
+                szorzat = 1;
+                for (int l = k; l <k+5; l++)
+                {
+                    szorzat = szorzat * kiszed[l];
+                }
+                vannyert=((szorzat==1) || (szorzat==32));
+                if (vannyert) break;
+            }
+        }
+}
+
+
 
 // mellékátlóban
-        if(i-4<0) mini=0;
-        else mini=i-4;
-
-        if(i+4>meret)maxi=meret;
-        else maxi=i+4;
-
-        if(j-4<0) minj=0;
-        else minj=j-4;
-
-        if(j+4>meret)maxj=meret;
-        else maxj=j+4;
-
-        dx = maxi;
-        dy = minj;
-        while(dx-4 >= mini && dy+4 <= maxj && !vannyert)
+if (!vannyert)
+{
+     szorzat = 1;
+     vector<int> kiszed;
+        int d = 0;
+        int k = i+4, l = j-4;
+        while (k>=i-4 && l<=j+4)
         {
-            szorzat = ter[dx][dy].allapot*ter[dx-1][dy+1].allapot*ter[dx-2][dy+2].allapot*
-                        ter[dx-3][dy+3].allapot*ter[dx-4][dy+4].allapot;
-            dx--;
-            dy++;
-            vannyert=((szorzat==1) || (szorzat==32));
+            if (k>=0 && k<=meret && l >=0 && l<=meret)
+            {
+                kiszed.push_back(ter[k][l].allapot);
+                d++;
+            }
+            k--;
+            l++;
         }
+        if (kiszed.size() >=5)
+        {
+            for (int k = 0; k <= kiszed.size()-4; k++ )
+            {
+                szorzat = 1;
+                for (int l = k; l <k+5; l++)
+                {
+                    szorzat = szorzat * kiszed[l];
+                }
+                vannyert=((szorzat==1) || (szorzat==32));
+                if (vannyert) break;
+            }
+        }
+}
 
         if(vannyert)
         {

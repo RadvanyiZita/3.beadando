@@ -6,7 +6,8 @@
 using namespace std;
 using namespace genv;
 
-Postit::Postit(int x0, int y0,int sx0,int sy0){
+Postit::Postit(int x0, int y0,int sx0,int sy0):widget(x0, y0, sx0, sy0)
+{
         sx = sx0;
         sy = sy0;
         x = x0;;

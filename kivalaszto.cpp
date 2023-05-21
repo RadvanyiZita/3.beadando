@@ -1,4 +1,5 @@
 #include "graphics.hpp"
+#include "widget.hpp"
 #include "kivalaszto.hpp"
 #include <vector>
 #include <string>
@@ -7,7 +8,7 @@
 
 using namespace genv;
 
-_lista::_lista(vector<string> elemek)
+_lista::_lista(vector<string> elemek):widget(0,0,100,100)
 {
     items = elemek;
     itemindex = 0;

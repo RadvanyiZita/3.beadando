@@ -1,6 +1,7 @@
 #ifndef KIVALASZTO_HPP_INCLUDED
 #define KIVALASZTO_HPP_INCLUDED
 #include "graphics.hpp"
+#include "widget.hpp"
 #include <vector>
 #include <string>
 #include <cmath>
@@ -8,7 +9,7 @@
 using namespace std;
 using namespace genv;
 
-struct szin
+class szin
 {
 protected:
     int r, g, b;
@@ -24,7 +25,7 @@ public:
     void Set_Blue(int blue);
 };
 
-class _lista:public szin
+class _lista:public szin, public widget
 {
 protected:
     int lX, lY;

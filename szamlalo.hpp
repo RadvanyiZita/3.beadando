@@ -1,9 +1,9 @@
 #ifndef SZAMLALO_HPP_INCLUDED
 #define SZAMLALO_HPP_INCLUDED
 #include "graphics.hpp"
+#include "widget.hpp"
 
-
-class Postit{
+class Postit: public widget{
 protected:
     int x, y, sx, sy;
     int v;
