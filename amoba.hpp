@@ -17,6 +17,7 @@ protected:
     string aktuals;
     int meret;
     elem ter[30][30];
+    int lepesszam;
 
 public:
     Jatekter(int xx,int yy, int panelh);
@@ -26,7 +27,7 @@ public:
     bool rajtavanboxon(int ex, int ey,int bx0,int by0, int bx1, int by1);
     void elemrajz();
     void lepesrajz(int i, int j);
-    void uzenet();
+    void uzenet(string s);
 
 };
 

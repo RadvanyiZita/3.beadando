@@ -21,6 +21,7 @@ Jatekter::Jatekter(int xx,int yy, int panelh)
     xkezd=0;
     ykezd=0;
     szel=0;
+    lepesszam=0;
 
 }
 void Jatekter::kirajzol()
@@ -43,8 +44,9 @@ void Jatekter::startmenu()
 
 void Jatekter::panelrajz()
 {
+    gout << font("LiberationSans-Regular.ttf",2*szel/3);
     gout << move_to(0,0)<< color(253,179,223)<<box(XX,panelheight)<<
-    move_to(50,30)<< color(0,0,0)<< text("A kovetkezo jatekos:");
+    move_to(50,30)<< color(0,0,0)<< text("A kovetkezo jatekos: "+aktuals);
 
 }
 bool Jatekter::rajtavanboxon(int ex, int ey,int bx0,int by0, int bx1, int by1)
@@ -96,9 +98,13 @@ void Jatekter::lepesrajz(int i, int j)
         gout << move_to(ter[i][j].x0+szel/6,ter[i][j].y0+szel/6)<<color(255,255,255)<< text("O");
     }
 
+    lepesszam++;
+    panelrajz();
+
 }
-void Jatekter::uzenet()
+void Jatekter::uzenet(string kiir)
 {
+    gout<< move_to(300,250)<< color(200,200,200)<< box(200,100)<< move_to(365,290)<< color(0,0,0)<<text(kiir);
 
 }
 
@@ -136,6 +142,7 @@ void Jatekter::uzenet()
         int maxj=meret;
         int szorzat=1;
         bool vannyert=false;
+        string kiir="";
 
         if(i-4<0) mini=0;
         else mini=i-4;
@@ -233,8 +240,17 @@ void Jatekter::uzenet()
         {
             VanNyero = true;
             if (aktuals =="X") aktuals = "O"; else aktuals = "X";
-            cout << "nyert" << " " << aktuals <<endl;
+            kiir="Nyert: "+aktuals;
+            uzenet(kiir);
+
         }
+
+        if(!vannyert && lepesszam==meret*meret)
+        {
+            kiir="Dontetlen";
+            uzenet(kiir);
+        }
+
 
 
     }

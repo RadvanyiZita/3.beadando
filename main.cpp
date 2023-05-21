@@ -1,5 +1,4 @@
 #include <iostream>
-#include "graphics.hpp"
 #include "szamlalo.hpp"
 #include "kivalaszto.hpp"
 #include "amoba.hpp"
@@ -14,12 +13,5 @@ int main()
 {
     Jatekmester jm(800,600,100);
     jm.run();
-//    gout.open(400,400);
-//     event ev;
-//     cout << "aejdbhoq"<< endl;
-//       while(gin >> ev && ev.keycode != key_escape)
-//       {
-//           gout << refresh;
-//       }
     return 0;
 }
